@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="scripts.js"></script>
+  <style>
+    * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background: #fa8900;
+      }
+
+      .wrapper {
+        margin: auto;
+        max-width: 640px;
+        padding-top: 60px;
+        text-align: center;
+      }
+
+      .container {
+        background-color: #D3D3D3;
+        padding: 20px;
+        border-radius: 10px;
+        
+      }
+
+      h1 {
+        color: #292626;
+        font-family: 'Varela Round', sans-serif;
+        letter-spacing: -.5px;
+        font-weight: 700;
+        padding-bottom: 10px;
+      }
+
+      .upload-container {
+        background-color: #D3D3D3;
+        border-radius: 6px;
+        padding: 10px;
+      }
+
+      .border-container {
+        border: 5px dashed #808080;
+      /*   border-radius: 4px; */
+        padding: 20px;
+      }
+
+      .border-container p {
+        color: #101517;
+        font-weight: 600;
+        font-size: 1.2em;
+        letter-spacing: -1px;
+        margin-top: 30px;
+        margin-bottom: 0;
+        opacity: 0.65;
+      }
+
+      #file-browser {
+        text-decoration: none;
+        color: rgb(22,42,255);
+        border-bottom: 3px dotted rgba(22, 22, 255, 0.85);
+      }
+
+      #file-browser:hover {
+        color: rgb(0, 0, 255);
+        border-bottom: 3px dotted rgba(0, 0, 255, 0.85);
+      }
+
+      .icons {
+        color: #808080;
+        opacity: 0.55;
+      }
+
+      .box__dragndrop,
+      .box__uploading {
+        display: none;
+      }
+
+      .logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 75px;
+        width: 30%;
+      }
+      .box__button {
+        font-weight: 600;
+        font-size: 16px;
+        color: #FFF;
+        background: #F49A24;
+        border-radius: 6px;
+        width: 30%;
+        display: block;
+        padding: 14px;
+        text-decoration: none;
+        margin: auto;
+        margin-top: 20px;
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .custom-file-upload {
+        font-weight: 600;
+        font-size: 18px;
+        border: 1px solid transparent;
+        display: inline-block;
+        background: #0f0e0e;
+        display: block;
+        width: 90%;
+        margin: auto;
+        padding: 14px;
+        border-radius: 6px;
+        color: #FFF;
+        cursor: pointer;
+      }
+
+      #lock-modal {
+        display: none;
+        background-color: black;
+        opacity: 0.6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+      }
+
+      .box {
+        position: relative;
+      }
+    </style>
+    <script>
+      $("#file-upload").css("opacity", "0");
+
+      $("#file-browser").click(function(e) {
+        e.preventDefault();
+        $("#file-upload").trigger("click");
+      });
+    </script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h1>Upload Image</h1>
+      <div class="upload-container">
+        <div class="border-container">
+          <div class="icons fa-4x">
+            <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+            <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+            <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+          </div>
+          <form class="box" method="post" enctype="multipart/form-data" id="form">
+            <div class="box__input">
+              <label class="custom-file-upload">
+                  Choose File<br><span id="file-chosen" style="font-size: 12px;"></span>
+                  <input type="file" id="actual-btn" name="file" hidden/>
+              </label>
+              <button class="box__button" type="submit" style="display:inline;" formaction="http://127.0.0.1:8000/img">Upload Image</button>
+              
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <img class="logo" src="https://www.jotform.com/resources/assets/logo/new/400x100/jotform-logo-transparent-400x100.png"></img>
+  <div id="lock-modal"></div>
+  
+  <script>
+    const actualBtn = document.getElementById('actual-btn');
+
+    const fileChosen = document.getElementById('file-chosen');
+    console.log(actualBtn)
+
+    actualBtn.addEventListener('change', function(){
+      fileChosen.textContent = this.files[0].name
+    })
+  </script>
+  <script>
+    $(document).ready(function() {
+      const lockModal = $("#lock-modal");
+      
+      const form = $("#form");
+
+      form.on('submit', function(e) {
+        // lock down the form
+        lockModal.css("display", "block");
+        
+      });
+    });
+  </script>
+</body>
+</html>
